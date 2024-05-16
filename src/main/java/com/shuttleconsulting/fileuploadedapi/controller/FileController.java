@@ -14,6 +14,7 @@ import java.nio.file.Path;
 
 import static com.shuttleconsulting.fileuploadedapi.dto.response.GenericResponse.GenerateHttpResponse;
 
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 @RequestMapping("/api/v1/file")
 public class FileController {
@@ -26,7 +27,7 @@ public class FileController {
   }
 
   @PostMapping()
-  @CrossOrigin(origins = {"http://localhost:*", "https://localhost:*"})
+  //@CrossOrigin(origins = {"http://localhost:*", "https://localhost:*"})
   public ResponseEntity<GenericResponse<FileUploadResponseDto>> uploadFile(@RequestParam("file") MultipartFile file) {
     return GenerateHttpResponse(service.store(file));
   }
