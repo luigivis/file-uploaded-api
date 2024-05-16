@@ -19,26 +19,26 @@ import static com.shuttleconsulting.fileuploadedapi.dto.response.GenericResponse
 @RequestMapping("/api/v1/file")
 public class FileController {
 
-  private final FileService service;
+    private final FileService service;
 
-  @Autowired
-  public FileController(FileService service) {
-    this.service = service;
-  }
+    @Autowired
+    public FileController(FileService service) {
+        this.service = service;
+    }
 
-  @PostMapping()
-  //@CrossOrigin(origins = {"http://localhost:*", "https://localhost:*"})
-  public ResponseEntity<GenericResponse<FileUploadResponseDto>> uploadFile(@RequestParam("file") MultipartFile file) {
-    return GenerateHttpResponse(service.store(file));
-  }
+    @PostMapping()
+    //@CrossOrigin(origins = {"http://localhost:*", "https://localhost:*"})
+    public ResponseEntity<GenericResponse<FileUploadResponseDto>> uploadFile(@RequestParam("file") MultipartFile file) {
+        return GenerateHttpResponse(service.store(file));
+    }
 
-  @GetMapping("/{filename:.+}")
-  @ResponseBody
-  public ResponseEntity<Resource> serveFile(@PathVariable String filename) {
-    var file = service.loadAsResource(filename);
-    return ResponseEntity.ok()
-        .header(
-            HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename() + "\"")
-        .body(file);
-  }
+    @GetMapping("{uuid}/{filename:.+}")
+    @ResponseBody
+    public ResponseEntity<Resource> serveFile(@PathVariable String filename, @PathVariable String uuid) {
+        var file = service.loadAsResource(uuid + "/" + filename);
+        return ResponseEntity.ok()
+                .header(
+                        HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename() + "\"")
+                .body(file);
+    }
 }
