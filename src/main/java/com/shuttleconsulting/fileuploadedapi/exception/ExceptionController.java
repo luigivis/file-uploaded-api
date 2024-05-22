@@ -15,7 +15,7 @@ import static com.shuttleconsulting.fileuploadedapi.dto.response.GenericResponse
 public class ExceptionController implements ErrorController {
 
   @RequestMapping("/error")
-  public ResponseEntity<GenericResponse<Object>> handleError(HttpServletRequest request) {
+  public ResponseEntity<GenericResponse<Object>> handleError(HttpServletRequest request, Exception ex) {
     var status = request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
     if (status != null) {
       var statusCode = Integer.parseInt(status.toString());

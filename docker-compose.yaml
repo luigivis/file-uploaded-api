@@ -1,0 +1,10 @@
+version: '3.8'
+name: file-upload-api-infra
+services:
+  mysql:
+    image: mysql:latest
+    environment:
+      - MYSQL_DATABASE=file-upload-api-infra
+      - MYSQL_ROOT_PASSWORD=123456789*
+    ports:
+      - '3306:3306'

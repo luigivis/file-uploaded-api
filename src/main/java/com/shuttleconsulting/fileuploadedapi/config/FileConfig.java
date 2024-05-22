@@ -1,5 +1,8 @@
 package com.shuttleconsulting.fileuploadedapi.config;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.shuttleconsulting.fileuploadedapi.enums.FilesEnum;
 import com.shuttleconsulting.fileuploadedapi.exception.StorageException;
 import java.io.IOException;
@@ -23,5 +26,13 @@ public class FileConfig {
       throw new StorageException("Could not initialize storage", e);
     }
     return true;
+  }
+
+  @Bean
+  protected ObjectMapper configObjectMapper(){
+    var mapper = new ObjectMapper();
+    mapper.registerModule(new JavaTimeModule());
+    mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+    return mapper;
   }
 }
